@@ -10,15 +10,13 @@ public:
         string  As = "a";
         for(int i = 0; i < n; i++){
             if(S[i] == ' '){
-                if(uset.find(temp[0]) != uset.end()){
-                    res += temp + "ma" + As + " ";
+                if(uset.find(temp[0]) != uset.end() || temp.size() == 1){
+                    res += temp;
                 }else{
-                    if(temp.size() > 1){
-                        res += temp.substr(1) + temp[0] + "ma" + As + " ";   
-                    }else{
-                        res += temp + "ma" + As + " ";
-                    }
+                    res += temp.substr(1) + temp[0];   
                 }
+                res += "ma" + As + " ";
+                
                 As += 'a';
                 temp = "";
             }else{
@@ -27,15 +25,12 @@ public:
         }
         
         if(temp.size() > 0){
-            if(uset.find(temp[0]) != uset.end()){
-                    res += temp + "ma" + As;
+            if(uset.find(temp[0]) != uset.end() || temp.size() == 1){
+                res += temp;
             }else{
-                if(temp.size() > 1){
-                    res += temp.substr(1) + temp[0] + "ma" + As;   
-                }else{
-                    res += temp + "ma" + As;
-                }
+                res += temp.substr(1) + temp[0];   
             }
+            res += "ma" + As;
         }
         
         return res;
