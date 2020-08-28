@@ -3,44 +3,44 @@ class Trie{
     bool endOfWord;
 public:
     Trie():endOfWord(false){
-        for(int i = 0; i < 26; ++i) children[i] = nullptr;
+        for(int i = 0; i < 26; ++i) children[i] = NULL;
     }
     
-    void insert(string s){
-        Trie *t = this;
-        for(char c: s){
-            if(t->children[c-'a'] == nullptr)
-                t->children[c-'a'] = new Trie();
-            t = t->children[c-'a'];
+    void insert(string word){
+        Trie *curr = this;
+        for(char ch: word){
+            if(curr->children[ch-'a'] == NULL)
+                curr->children[ch-'a'] = new Trie();
+            curr = curr->children[ch-'a'];
         }
-        t->endOfWord = true;
+        curr->endOfWord = true;
     }
     
-    bool search(deque<char>& s){
-        Trie *t = this;
-        for(char c: s){
-            if(t->children[c-'a'] == nullptr) return false;
-            t = t->children[c-'a'];
-            if(t->endOfWord) return true;
+    bool search(deque<char>& word){
+        Trie *curr = this;
+        for(char ch: word){
+            if(curr->children[ch-'a'] == NULL) return false;
+            curr = curr->children[ch-'a'];
+            if(curr->endOfWord) return true;
         }
         return false;
     }
 };
 
 class StreamChecker {
-    Trie t;
+    Trie trie;
     deque<char> stream;
 public:
     StreamChecker(vector<string>& words) {
-        for(string& w: words){
-            reverse(w.begin(), w.end());
-            t.insert(w);
+        for(string& word: words){
+            reverse(word.begin(), word.end());
+            trie.insert(word);
         }
     }
     
     bool query(char letter) {
         stream.push_front(letter);
-        return t.search(stream);
+        return trie.search(stream);
     }
 };
 
